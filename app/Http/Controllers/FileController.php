@@ -13,6 +13,8 @@ use Inertia\Inertia;
 
 class FileController extends Controller
 {
+    use \Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
     // ─── INDEX ────────────────────────────────────────────────────────────────
 
     public function index()
@@ -28,8 +30,9 @@ class FileController extends Controller
                 'size'           => $f->formatted_size,
                 'is_public'      => $f->is_public,
                 'has_password'   => (bool) $f->password,
-                'download_count' => $f->download_count,
+'download_count' => $f->download_count,
                 'share_token'    => $f->share_token,
+                'starred'        => $f->starred,
                 'expires_at'     => $f->expires_at?->toISOString(),
                 'created_at'     => $f->created_at->diffForHumans(),
             ]);
@@ -79,11 +82,14 @@ class FileController extends Controller
 
     // ─── SHOW ─────────────────────────────────────────────────────────────────
 
+
+
     public function show(File $file)
     {
         $this->authorize('view', $file);
 
         return Inertia::render('Files/Show', [
+
             'file' => [
                 'id'             => $file->id,
                 'original_name'  => $file->original_name,
@@ -91,7 +97,8 @@ class FileController extends Controller
                 'size'           => $file->formatted_size,
                 'is_public'      => $file->is_public,
                 'has_password'   => (bool) $file->password,
-                'download_count' => $file->download_count,
+'download_count' => $file->download_count,
+                'starred'        => $file->starred,
                 'share_token'    => $file->share_token,
                 'share_url'      => url('/share/' . $file->share_token),
                 'expires_at'     => $file->expires_at?->toISOString(),
@@ -101,6 +108,8 @@ class FileController extends Controller
     }
 
     // ─── EDIT ─────────────────────────────────────────────────────────────────
+
+
 
     public function edit(File $file)
     {
@@ -117,13 +126,17 @@ class FileController extends Controller
         ]);
     }
 
+
     // ─── UPDATE ───────────────────────────────────────────────────────────────
+
+
 
     public function update(Request $request, File $file)
     {
         $this->authorize('update', $file);
 
         $request->validate([
+
             'is_public'       => ['boolean'],
             'password'        => ['nullable', 'string', 'min:4'],
             'remove_password' => ['boolean'],
@@ -149,11 +162,14 @@ class FileController extends Controller
 
     // ─── DESTROY ──────────────────────────────────────────────────────────────
 
+
+
     public function destroy(File $file)
     {
         $this->authorize('delete', $file);
 
         Storage::disk('local')->delete($file->stored_name);
+
         $file->delete();
 
         return redirect()->route('files.index')
@@ -162,11 +178,14 @@ class FileController extends Controller
 
     // ─── DOWNLOAD ─────────────────────────────────────────────────────────────
 
+
+
     public function download(File $file)
     {
         $this->authorize('view', $file);
 
         if (! Storage::disk('local')->exists($file->stored_name)) {
+
             abort(404, 'File not found on disk.');
         }
 

@@ -28,10 +28,16 @@ const showingNavigationDropdown = ref(false);
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    Dashboard
+                                    📊 Dashboard
                                 </NavLink>
                                 <NavLink :href="route('files.index')" :active="route().current('files.*')">
-                                    My Files
+                                    📁 My Files
+                                </NavLink>
+                                <NavLink :href="route('files.starred')" :active="route().current('files.starred')">
+                                    ⭐ Starred
+                                </NavLink>
+                                <NavLink :href="route('tags.index')" :active="route().current('tags.*')">
+                                    🏷️ Tags
                                 </NavLink>
                             </div>
                         </div>
@@ -82,10 +88,16 @@ const showingNavigationDropdown = ref(false);
                 <div v-show="showingNavigationDropdown" class="block sm:hidden">
                     <div class="space-y-1 px-2 pb-3 pt-2">
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                            Dashboard
+                            📊 Dashboard
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('files.index')" :active="route().current('files.*')">
-                            My Files
+                            📁 My Files
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('files.starred')" :active="route().current('files.starred')">
+                            ⭐ Starred
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('tags.index')" :active="route().current('tags.*')">
+                            🏷️ Tags
                         </ResponsiveNavLink>
                     </div>
 

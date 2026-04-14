@@ -17,8 +17,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/files/{file}/download', [FileController::class, 'download'])
         ->name('files.download');
 
-    // Dashboard redirect
-    Route::get('/dashboard', fn() => redirect()->route('files.index'))
+    // New features
+
+    Route::get('/files-starred', fn() => inertia('Files/Favorites', ['files' => auth()->user()->files()->where('starred', true)->get()]))
+        ->name('files.starred');
+
+    Route::get('/tags', fn() => inertia('Tags'))
+        ->name('tags.index');
+
+    // Dashboard
+    Route::get('/dashboard', fn() => inertia('Dashboard'))
         ->name('dashboard');
 
     // Breeze profile routes

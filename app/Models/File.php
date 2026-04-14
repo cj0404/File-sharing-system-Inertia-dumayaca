@@ -21,10 +21,12 @@ class File extends Model
         'password',
         'expires_at',
         'download_count',
+        'starred',
     ];
 
     protected $casts = [
         'is_public'  => 'boolean',
+        'starred'    => 'boolean',
         'expires_at' => 'datetime',
     ];
 
@@ -37,6 +39,16 @@ class File extends Model
     public function shares()
     {
         return $this->hasMany(FileShare::class);
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'file_tags');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 
     // Helpers

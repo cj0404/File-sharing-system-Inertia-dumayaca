@@ -6,10 +6,9 @@
 [![Laravel](https://img.shields.io/badge/Laravel-12-red)]()
 [![Vue](https://img.shields.io/badge/Vue-3-green)]()
 [![Inertia](https://img.shields.io/badge/Inertia-2.0-blue)]()
+[![License](https://img.shields.io/badge/License-MIT-blue)]()
 
-## ✨ Features
-
-## ✨ Features
+## ✨ Core Features
 
 - ✅ **File Upload & Management** - Drag-and-drop interface with search & filtering
 - ✅ **Secure Sharing** - Shareable links with password & expiry protection
@@ -19,6 +18,15 @@
 - ✅ **Responsive UI** - Mobile-friendly with Tailwind CSS
 - ✅ **User Authentication** - Email verification & password recovery
 - ✅ **SEO Optimized** - Meta tags and dynamic titles
+
+## 🎉 Latest Enhancements (v2.0)
+
+- ⭐ **Star/Favorites System** - Mark important files for quick access
+- 🏷️ **Tags & Categories** - Organize files with user-scoped custom tags
+- 📝 **Comments & Notes** - Add collaborative notes to files
+- 📊 **Statistics Dashboard** - Real-time metrics and analytics
+- 🎨 **Enhanced UI** - Consistent white-background design across all pages
+- 🧭 **Improved Navigation** - 4 new dedicated pages with focused workflows
 
 ## 🚀 Quick Start
 
@@ -72,9 +80,19 @@ Password: password
 
 ## 📚 Documentation
 
-- **[PROJECT_SUMMARY.md](PROJECT_SUMMARY.md)** - Complete implementation details & rubric checklist
+### User & Feature Documentation
+- **[FEATURES_GUIDE.md](FEATURES_GUIDE.md)** - Complete user guide for all features (Star, Tags, Comments, Dashboard)
+- **[QUICKSTART.md](QUICKSTART.md)** - Quick setup and first steps
+
+### Developer & Admin Documentation
+- **[DEVELOPER_GUIDE.md](DEVELOPER_GUIDE.md)** - Comprehensive development guide with troubleshooting, API docs, deployment
+- **[PROJECT_COMPLETION_REPORT.md](PROJECT_COMPLETION_REPORT.md)** - Complete project report with all implementation details
+- **[PROJECT_SUMMARY.md](PROJECT_SUMMARY.md)** - Implementation summary & rubric checklist
+
+### Quick References
 - **Routes** - `php artisan route:list`
 - **Database** - SQLite in `database/database.sqlite`
+- **API Endpoints** - See DEVELOPER_GUIDE.md for full API documentation
 
 ## 🛣️ API Routes
 

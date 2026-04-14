@@ -24,6 +24,21 @@ class User extends Authenticatable
         return $this->hasMany(\App\Models\File::class);
     }
 
+    public function tags()
+    {
+        return $this->hasMany(\App\Models\Tag::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(\App\Models\Comment::class);
+    }
+
+    public function shares()
+    {
+        return $this->hasMany(\App\Models\FileShare::class);
+    }
+
     protected $fillable = [
         'name',
         'email',
