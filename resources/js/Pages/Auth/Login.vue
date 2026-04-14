@@ -33,7 +33,7 @@ const submit = () => {
     <GuestLayout>
         <Head title="Log in" />
 
-        <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
+        <div v-if="status" class="mb-4 text-sm font-medium text-green-600 bg-green-50 p-3 rounded-lg">
             {{ status }}
         </div>
 
@@ -70,30 +70,37 @@ const submit = () => {
             </div>
 
             <div class="mt-4 block">
-                <label class="flex items-center">
+                <label class="flex items-center gap-2">
                     <Checkbox name="remember" v-model:checked="form.remember" />
-                    <span class="ms-2 text-sm text-gray-600"
-                        >Remember me</span
-                    >
+                    <span class="text-sm text-gray-700 font-medium">Remember me</span>
                 </label>
             </div>
 
-            <div class="mt-4 flex items-center justify-end">
+            <div class="mt-4 flex items-center justify-between">
                 <Link
                     v-if="canResetPassword"
                     :href="route('password.request')"
-                    class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    class="text-sm text-blue-600 hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded"
                 >
                     Forgot your password?
                 </Link>
 
                 <PrimaryButton
-                    class="ms-4"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >
                     Log in
                 </PrimaryButton>
+            </div>
+
+            <div class="mt-4 text-center text-sm text-gray-600">
+                Don't have an account?
+                <Link
+                    :href="route('register')"
+                    class="text-blue-600 hover:text-blue-800 font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded"
+                >
+                    Register here
+                </Link>
             </div>
         </form>
     </GuestLayout>

@@ -36,7 +36,7 @@ const updatePassword = () => {
 <template>
     <section>
         <header>
-            <h2 class="text-lg font-medium text-gray-900">
+            <h2 class="text-xl font-bold text-gray-900">
                 Update Password
             </h2>
 
@@ -55,7 +55,7 @@ const updatePassword = () => {
                     ref="currentPasswordInput"
                     v-model="form.current_password"
                     type="password"
-                    class="mt-1 block w-full"
+                    class="mt-2 block w-full"
                     autocomplete="current-password"
                 />
 
@@ -73,7 +73,7 @@ const updatePassword = () => {
                     ref="passwordInput"
                     v-model="form.password"
                     type="password"
-                    class="mt-1 block w-full"
+                    class="mt-2 block w-full"
                     autocomplete="new-password"
                 />
 
@@ -90,7 +90,7 @@ const updatePassword = () => {
                     id="password_confirmation"
                     v-model="form.password_confirmation"
                     type="password"
-                    class="mt-1 block w-full"
+                    class="mt-2 block w-full"
                     autocomplete="new-password"
                 />
 
@@ -100,8 +100,8 @@ const updatePassword = () => {
                 />
             </div>
 
-            <div class="flex items-center gap-4">
-                <PrimaryButton :disabled="form.processing">Save</PrimaryButton>
+            <div class="flex items-center gap-4 pt-4 border-t">
+                <PrimaryButton :disabled="form.processing">Save Changes</PrimaryButton>
 
                 <Transition
                     enter-active-class="transition ease-in-out"
@@ -111,9 +111,9 @@ const updatePassword = () => {
                 >
                     <p
                         v-if="form.recentlySuccessful"
-                        class="text-sm text-gray-600"
+                        class="text-sm text-green-600 font-medium"
                     >
-                        Saved.
+                        ✓ Saved successfully.
                     </p>
                 </Transition>
             </div>
