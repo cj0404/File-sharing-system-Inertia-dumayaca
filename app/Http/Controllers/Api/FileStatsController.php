@@ -16,7 +16,7 @@ class FileStatsController extends Controller
             'total_files' => $files->count(),
             'total_size' => $files->sum('size'),
             'total_downloads' => $files->sum('download_count'),
-            'starred_files' => $files->where('starred', true)->count(),
+'favorites' => $files->where('starred', true)->count(),
             'public_files' => $files->where('is_public', true)->count(),
             'private_files' => $files->where('is_public', false)->count(),
             'files_with_tags' => $files->filter(fn($f) => $f->tags->count() > 0)->count(),

@@ -7,10 +7,14 @@ use Illuminate\Support\Facades\Route;
 // Public landing page
 Route::get('/', fn() => inertia('Landing'))->name('home');
 
+// Public files page
+Route::get('/public', fn() => inertia('Files/Public', ['files' => \App\Models\File::where('is_public', true)->latest()->get()]))->name('files.public');
+
 // Public share link (route protection handled in controller)
 Route::get('/share/{token}', [FileController::class, 'share'])->name('files.share');
 
-// Authenticated routes (Middleware: auth + verified)
+
+
 Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('files', FileController::class);

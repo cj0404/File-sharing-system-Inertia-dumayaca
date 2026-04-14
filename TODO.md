@@ -1,19 +1,18 @@
-# TODO Steps for Fixing Errors
+# Favorites & Tags Implementation Plan
 
-## Plan Breakdown:
-1. ✅ [Complete] Create TODO.md
-2. ✅ Fix star toggle URL in resources/js/Pages/Files/Index.vue
-3. ✅ Add star toggle functionality to resources/js/Pages/Files/Show.vue (script added, template pending)  
-4. ✅ Enhance error handling in resources/js/Pages/Tags.vue
-5. ✅ [Final] Rebuild frontend and test
-6. attempt_completion
+## Steps (1/12 complete)
 
-**Status: Complete. Starred props added to index/show controllers. Edit/delete routes/methods confirmed working.**
+### 1. ✓ Update AuthenticatedLayout.vue nav (⭐ Starred → ❤️ Favorites)
+### 2. ✓ Update Dashboard.vue (star icons/text → heart/favorites)
+ ### 3. ✓ Update Files/Index.vue (⭐ toggle/filter → ❤️)
+### 4. Update Files/Show.vue (⭐ toggle → ❤️)
+### 5. Rename & update Starred.vue → Favorites.vue (icons/text)
+### 6. Update web.php route comment
+### 7. Enhance Tags.vue: Add files per tag, attach UI
+### 8. Add FileTagController::indexFiles(Tag $tag)
+### 9. Update routes/api.php for /tags/{tag}/files
+### 10. Test toggle favorite
+### 11. Test create tag & list files
+### 12. Update stats text if needed
 
-## Additional Notes for Edit/Delete:
-- Upload file first at /files/create.
-- Verify email if 403 (click link in /email/verify or /profile).
-- Check browser console/network tab for errors.
-
-**All fixes applied.**
-
+**Next:** Step 1

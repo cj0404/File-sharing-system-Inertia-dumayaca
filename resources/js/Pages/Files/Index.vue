@@ -9,13 +9,13 @@ const props = defineProps({ files: Array })
 const page   = usePage()
 const flash  = computed(() => page.props.flash)
 const search = ref('')
-const filterStarred = ref(false)
-const starredFiles = ref(new Set())
+const filterFavorites = ref(false)
+const favoritedFiles = ref(new Set())
 
 const filtered = computed(() =>
   props.files.filter(f => {
     const matchesSearch = f.original_name.toLowerCase().includes(search.value.toLowerCase())
-    const matchesFilter = !filterStarred.value || starredFiles.value.has(f.id)
+    const matchesFilter = !filterFavorites.value || favoritedFiles.value.has(f.id)
     return matchesSearch && matchesFilter
   })
 )
@@ -26,17 +26,20 @@ function destroy(id) {
   }
 }
 
-async function toggleStar(fileId) {
+async function toggleFavorite(fileId) {
+  console.log('Toggle clicked for file', fileId)
   try {
     const response = await axios.post(`/api/${fileId}/star`)
     if (response.data.starred) {
-      starredFiles.value.add(fileId)
+      favoritedFiles.value.add(fileId)
+      alert('Favorited!')
     } else {
-      starredFiles.value.delete(fileId)
+      favoritedFiles.value.delete(fileId)
+      alert('Unfavorited!')
     }
   } catch (error) {
-    console.error('Error toggling star:', error)
-    alert('Error toggling star: ' + (error.response?.data?.message || error.message))
+    console.error('Error toggling favorite:', error)
+    alert('Error: ' + (error.response?.data?.message || error.message || 'Unknown'))
   }
 }
 
@@ -81,11 +84,11 @@ function copyLink(token) {
           class="flex-1 border border-gray-300 rounded-lg px-4 py-2.5 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
         />
         <button
-          @click="filterStarred = !filterStarred"
-          :class="filterStarred ? 'bg-yellow-500 text-white' : 'bg-gray-200 text-gray-700'"
+          @click="filterFavorites = !filterFavorites"
+          :class="filterFavorites ? 'bg-pink-500 text-white' : 'bg-gray-200 text-gray-700'"
           class="px-4 py-2.5 rounded-lg font-medium text-sm transition"
         >
-          ⭐ Starred {{ filterStarred ? '(On)' : '' }}
+          ❤️ Favorites {{ filterFavorites ? '(On)' : '' }}
         </button>
         <Link
           :href="route('files.create')"
@@ -107,7 +110,7 @@ function copyLink(token) {
           :href="route('files.starred')"
           class="px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition"
         >
-          ⭐ Starred
+          ❤️ Favorites
         </Link>
         <Link
           :href="route('tags.index')"
@@ -122,10 +125,10 @@ function copyLink(token) {
         <p class="text-3xl mb-4">📭</p>
         <p class="text-gray-600 font-medium">No files found</p>
         <p class="text-gray-500 text-sm mt-2">
-          {{ filterStarred ? 'Star some files to see them here' : 'Upload your first file to get started' }}
+          {{ filterFavorites ? 'Favorite some files to see them here' : 'Upload your first file to get started' }}
         </p>
         <Link
-          v-if="!filterStarred"
+          v-if="!filterFavorites"
           :href="route('files.create')"
           class="inline-block mt-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-lg transition"
         >
@@ -133,7 +136,7 @@ function copyLink(token) {
         </Link>
       </div>
 
-      <!-- File Grid/Table -->
+      <!-- File Table -->
       <div v-else class="bg-white shadow rounded-lg overflow-hidden">
         <div class="overflow-x-auto">
           <table class="w-full text-sm">
@@ -152,13 +155,14 @@ function copyLink(token) {
                 <td class="px-6 py-4">
                   <div class="flex items-center gap-3">
                     <button
-                      @click="toggleStar(file.id)"
-                      class="text-xl hover:scale-125 transition"
-                      :class="starredFiles.has(file.id) ? 'text-yellow-400' : 'text-gray-400'"
+                      @click="toggleFavorite(file.id)"
+                      class="text-xl hover:scale-125 transition-transform duration-200"
+                      :class="favoritedFiles.has(file.id) ? 'text-pink-500 fill-current' : 'text-gray-400'"
+                      title="Toggle favorite"
                     >
-                      ⭐
+                      ❤️
                     </button>
-                    <span class="mr-2">{{ icon(file.mime_type) }}</span>
+                    <span class="mr-2 text-xl">{{ icon(file.mime_type) }}</span>
                     <span class="font-medium text-gray-900 truncate max-w-[250px]">
                       {{ file.original_name }}
                     </span>
@@ -168,42 +172,29 @@ function copyLink(token) {
                 <td class="px-6 py-4">
                   <div class="flex items-center gap-2">
                     <span
-                      class="px-3 py-1 rounded-full text-xs font-medium inline-block"
+                      class="px-3 py-1 rounded-full text-xs font-medium"
                       :class="file.is_public ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'"
                     >
                       {{ file.is_public ? '🌐 Public' : '🔒 Private' }}
                     </span>
-                    <span v-if="file.has_password" class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">
-                      🔐 PWD
+                    <span v-if="file.password" class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">
+                      🔐 Password
                     </span>
                   </div>
                 </td>
-                <td class="px-6 py-4 text-center">
-                  <span class="font-bold text-gray-900">{{ file.download_count }}</span>
-                </td>
-                <td class="px-6 py-4 text-gray-600 text-xs">{{ file.created_at }}</td>
-                <td class="px-6 py-4 text-right">
-                  <div class="flex justify-end gap-2 items-center">
-                    <button
-                      @click="copyLink(file.share_token)"
-                      class="text-indigo-600 hover:text-indigo-900 font-medium text-xs hover:bg-indigo-50 px-2 py-1 rounded transition"
-                      title="Copy share link"
-                    >
-                      Share 🔗
-                    </button>
-                    <Link
-                      :href="route('files.edit', file.id)"
-                      class="text-blue-600 hover:text-blue-900 font-medium text-xs hover:bg-blue-50 px-2 py-1 rounded transition"
-                    >
-                      Edit
-                    </Link>
-                    <button
-                      @click="destroy(file.id)"
-                      class="text-red-600 hover:text-red-900 font-medium text-xs hover:bg-red-50 px-2 py-1 rounded transition"
-                    >
-                      Delete
-                    </button>
-                  </div>
+                <td class="px-6 py-4 text-center font-mono font-bold text-lg text-gray-900">{{ file.download_count }}</td>
+                <td class="px-6 py-4 text-sm text-gray-500">{{ file.created_at }}</td>
+                <td class="px-6 py-4 text-right space-x-2">
+                  <button @click="copyLink(file.share_token)" class="text-indigo-600 hover:text-indigo-900 p-1 rounded transition">
+                    <span class="sr-only">Share</span>
+                    🔗
+                  </button>
+                  <Link :href="route('files.edit', file.id)" class="text-blue-600 hover:text-blue-900 p-1 rounded transition">
+                    ✏️
+                  </Link>
+                  <button @click="destroy(file.id)" class="text-red-600 hover:text-red-900 p-1 rounded transition">
+                    🗑️
+                  </button>
                 </td>
               </tr>
             </tbody>

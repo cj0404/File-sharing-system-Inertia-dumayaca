@@ -30,12 +30,18 @@ const showingNavigationDropdown = ref(false);
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     📊 Dashboard
                                 </NavLink>
+
                                 <NavLink :href="route('files.index')" :active="route().current('files.*')">
                                     📁 My Files
                                 </NavLink>
-                                <NavLink :href="route('files.starred')" :active="route().current('files.starred')">
-                                    ⭐ Starred
+                                <NavLink :href="route('files.public')" :active="route().current('files.public')">
+                                    🌐 Public
                                 </NavLink>
+                                <NavLink :href="route('files.starred')" :active="route().current('files.starred')">
+                                    ❤️ Favorites
+                                </NavLink>
+
+
                                 <NavLink :href="route('tags.index')" :active="route().current('tags.*')">
                                     🏷️ Tags
                                 </NavLink>
@@ -94,8 +100,9 @@ const showingNavigationDropdown = ref(false);
                             📁 My Files
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('files.starred')" :active="route().current('files.starred')">
-                            ⭐ Starred
+                            ❤️ Favorites
                         </ResponsiveNavLink>
+
                         <ResponsiveNavLink :href="route('tags.index')" :active="route().current('tags.*')">
                             🏷️ Tags
                         </ResponsiveNavLink>

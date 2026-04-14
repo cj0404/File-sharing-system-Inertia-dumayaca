@@ -13,12 +13,13 @@ Route::prefix('files')->group(function () {
 });
 
 // Protected routes (require authentication)
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth:sanctum'])->group(function () {
     // File statistics
     Route::get('/stats', [FileStatsController::class, 'index']);
     
-    // Star/unstar files
+// Star/favorite toggle
     Route::post('/{file}/star', [FileStarController::class, 'toggle']);
+
     
     // Tags
     Route::prefix('tags')->group(function () {

@@ -16,6 +16,16 @@ class FileTagController extends Controller
         return response()->json(Auth::user()->tags()->get());
     }
 
+    // Get files for tag
+    public function files(Tag $tag)
+    {
+        if ($tag->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized');
+        }
+
+        return response()->json($tag->files()->where('user_id', Auth::id())->get());
+    }
+
     // Attach tag to file
     public function attach(Request $request, Tag $tag, File $file)
     {

@@ -33,7 +33,7 @@ function copyLink(token) {
 
   <AuthenticatedLayout>
     <template #header>
-      <h2 class="text-2xl font-bold leading-tight text-gray-900">💾 Favorites</h2>
+      <h2 class="text-2xl font-bold leading-tight text-gray-900">❤️ Favorites</h2>
     </template>
 
     <div class="py-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -43,7 +43,7 @@ function copyLink(token) {
         <input
           v-model="search"
           placeholder="🔍 Search favorites…"
-          class="flex-1 border border-gray-300 rounded-lg px-4 py-2.5 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+          class="flex-1 border border-gray-300 rounded-lg px-4 py-2.5 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-pink-500"
         />
         <Link
           :href="route('files.index')"
@@ -55,15 +55,15 @@ function copyLink(token) {
 
       <!-- Empty State -->
       <div v-if="filtered.length === 0" class="bg-white shadow rounded-lg p-12 text-center">
-        <p class="text-2xl mb-4">💾</p>
+        <p class="text-2xl mb-4">❤️</p>
         <p class="text-gray-600 font-medium">No favorites yet</p>
-        <p class="text-gray-500 text-sm mt-2">Mark files as favorite to see them here</p>
+        <p class="text-gray-500 text-sm mt-2">Favorite your favorite files to see them here</p>
       </div>
 
       <!-- File Table -->
       <div v-else class="bg-white shadow rounded-lg overflow-hidden">
         <table class="w-full text-sm">
-          <thead class="bg-yellow-50 text-gray-700 uppercase text-xs font-semibold">
+          <thead class="bg-pink-50 text-gray-700 uppercase text-xs font-semibold">
             <tr>
               <th class="px-6 py-3 text-left">File</th>
               <th class="px-6 py-3 text-left">Size</th>
@@ -74,7 +74,7 @@ function copyLink(token) {
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200">
-            <tr v-for="file in filtered" :key="file.id" class="hover:bg-yellow-50 transition duration-150 ease-in-out">
+            <tr v-for="file in filtered" :key="file.id" class="hover:bg-pink-50 transition duration-150 ease-in-out">
               <td class="px-6 py-3">
                 <span class="mr-2">{{ icon(file.mime_type) }}</span>
                 <span class="font-medium text-gray-900 truncate max-w-[200px] inline-block align-middle">

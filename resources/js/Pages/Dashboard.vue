@@ -86,14 +86,14 @@ const formatBytes = (bytes) => {
             </div>
           </div>
 
-          <!-- Starred Files -->
-          <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition p-6 border-l-4 border-yellow-500">
+          <!-- Favorites -->
+          <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition p-6 border-l-4 border-pink-500">
             <div class="flex items-center justify-between">
               <div>
-                <p class="text-sm font-medium text-gray-600">Starred Files</p>
-                <p class="text-3xl font-bold text-gray-900 mt-2">{{ stats.starred_files }}</p>
+                <p class="text-sm font-medium text-gray-600">Favorites</p>
+{{ stats.favorites }}
               </div>
-              <div class="text-4xl">⭐</div>
+              <div class="text-4xl">❤️</div>
             </div>
           </div>
 
@@ -159,9 +159,9 @@ const formatBytes = (bytes) => {
               </div>
             </div>
             <div class="flex gap-4">
-              <div class="text-2xl">⭐</div>
+              <div class="text-2xl">❤️</div>
               <div>
-                <h4 class="font-semibold text-gray-900">Star Files</h4>
+                <h4 class="font-semibold text-gray-900">Favorite Files</h4>
                 <p class="text-sm text-gray-600">Mark important files as favorites</p>
               </div>
             </div>

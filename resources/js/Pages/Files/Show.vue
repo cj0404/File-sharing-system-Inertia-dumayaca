@@ -6,15 +6,15 @@ import axios from 'axios'
 
 const props   = defineProps({ file: Object })
 const copied  = ref(false)
-const starredFile = ref(props.file.starred || false)
+const favoritedFile = ref(props.file.starred || false)
 
-async function toggleStar() {
+async function toggleFavorite() {
   try {
-    const response = await axios.post(`/api/${props.file.id}/star`)
-    starredFile.value = response.data.starred
+    const response = await axios.post(`/api/files/${props.file.id}/favorite`)
+    favoritedFile.value = response.data.starred
   } catch (error) {
-    console.error('Error toggling star:', error)
-    alert('Error toggling star: ' + (error.response?.data?.message || error.message))
+    console.error('Error toggling favorite:', error)
+    alert('Error toggling favorite: ' + (error.response?.data?.message || error.message))
   }
 }
 

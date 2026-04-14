@@ -57,8 +57,18 @@ async function createTag() {
   }
 }
 
-function selectTag(tag) {
-  selectedTag.value = selectedTag.value?.id === tag.id ? null : tag
+async function selectTag(tag) {
+  if (selectedTag.value?.id === tag.id) {
+    selectedTag.value = null
+    return
+  }
+  selectedTag.value = tag
+  try {
+    const response = await axios.get(`/api/tags/${tag.id}/files`)
+    tag.files = response.data
+  } catch (error) {
+    console.error('Error fetching tag files:', error)
+  }
 }
 </script>
 
